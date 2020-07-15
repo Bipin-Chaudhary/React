@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "reactstrap";
 
-class DishDetails extends Component {
+class DishDetail extends Component {
   state = {};
 
   renderDish(dish) {
@@ -36,7 +36,12 @@ class DishDetails extends Component {
           <li>
             <p>{item.comment}</p>
             <p>
-              --{item.author},&nbsp;{item.date}
+              --{item.author},&nbsp;
+              {new Intl.DateTimeFormat("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "2-digit",
+              }).format(new Date(Date.parse(item.date)))}
             </p>
           </li>
         );
@@ -52,14 +57,19 @@ class DishDetails extends Component {
 
     const cmt = this.renderComment(this.props.dish.comments);
     return (
-      <React.Fragment>
-        <div className="col-12 col-md-5 m-1">
-          {this.renderDish(this.props.dish)}
+      <div className="container">
+        <div className="row">
+          <div className="col-12 col-md-5 m-1">
+            {this.renderDish(this.props.dish)}
+          </div>
+          <div className="col-12 col-md-5 m-1">
+            <h4>Comments</h4>
+            {cmt}
+          </div>
         </div>
-        <div className="col-12 col-md-5 m-1">{cmt}</div>
-      </React.Fragment>
+      </div>
     );
   }
 }
 
-export default DishDetails;
+export default DishDetail;
